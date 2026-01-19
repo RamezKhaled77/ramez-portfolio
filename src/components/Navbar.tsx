@@ -15,13 +15,13 @@ const Navbar = () => {
   const itemRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
   useEffect(() => {
-    const mainContainer = document.querySelector('.snap-y');
+    const mainContainer = document.querySelector(".snap-y");
     const sectionIds = ["hero", "about", "skills", "projects", "contact"];
-    
+
     const handleScroll = () => {
       const scrollTop = mainContainer?.scrollTop || window.scrollY;
       setIsScrolled(scrollTop > 50);
-      
+
       // Scroll-spy: detect which section is in view
       let currentIndex = 0;
       for (let i = 0; i < sectionIds.length; i++) {
@@ -29,7 +29,10 @@ const Navbar = () => {
         if (section) {
           const rect = section.getBoundingClientRect();
           // Check if section is in the top half of viewport
-          if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
+          if (
+            rect.top <= window.innerHeight / 2 &&
+            rect.bottom >= window.innerHeight / 2
+          ) {
             currentIndex = i;
             break;
           }
@@ -41,13 +44,13 @@ const Navbar = () => {
       }
       setActiveIndex(currentIndex);
     };
-    
-    mainContainer?.addEventListener('scroll', handleScroll);
+
+    mainContainer?.addEventListener("scroll", handleScroll);
     window.addEventListener("scroll", handleScroll);
     handleScroll(); // Initial check
-    
+
     return () => {
-      mainContainer?.removeEventListener('scroll', handleScroll);
+      mainContainer?.removeEventListener("scroll", handleScroll);
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
@@ -89,7 +92,7 @@ const Navbar = () => {
         </button>
 
         {/* Centered Desktop Pill Navigation */}
-        <div 
+        <div
           ref={navRef}
           className="hidden md:flex absolute left-1/2 -translate-x-1/2 items-center bg-background/40 backdrop-blur-2xl rounded-full p-1.5 border border-white/20 dark:border-white/10 shadow-xl shadow-black/5 dark:shadow-black/20 ring-1 ring-white/10"
         >
@@ -99,11 +102,12 @@ const Navbar = () => {
             style={{
               left: indicatorStyle.left,
               width: indicatorStyle.width,
-              transform: 'translateZ(0)',
-              transition: 'left 0.4s cubic-bezier(0.4, 0, 0.2, 1), width 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+              transform: "translateZ(0)",
+              transition:
+                "left 0.4s cubic-bezier(0.4, 0, 0.2, 1), width 0.4s cubic-bezier(0.4, 0, 0.2, 1)",
             }}
           />
-          
+
           {navItems.map((item, index) => (
             <button
               key={item}
@@ -123,7 +127,7 @@ const Navbar = () => {
         {/* Right Side Actions */}
         <div className="hidden md:flex items-center gap-4">
           <ThemeToggle />
-          
+
           <Button
             onClick={() => window.open("/RamezKhaled_CV.pdf", "_blank")}
             className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-full"
