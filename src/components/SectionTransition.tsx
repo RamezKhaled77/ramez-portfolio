@@ -1,5 +1,12 @@
-import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import {
+  createContext,
+  useContext,
+  useState,
+  useCallback,
+  useEffect,
+  ReactNode,
+} from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface TransitionContextType {
   isTransitioning: boolean;
@@ -18,11 +25,11 @@ export const TransitionProvider = ({ children }: { children: ReactNode }) => {
 
   const triggerTransition = useCallback((targetId: string) => {
     setIsTransitioning(true);
-    
+
     setTimeout(() => {
       const element = document.getElementById(targetId);
       if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
+        element.scrollIntoView({ behavior: "smooth" });
       }
     }, 300);
 
@@ -40,18 +47,18 @@ export const TransitionProvider = ({ children }: { children: ReactNode }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
-            className="fixed inset-0 z-[100] pointer-events-none flex items-center justify-center"
+            transition={{ duration: 0.4, ease: "easeInOut" }}
+            className="fixed inset-0 z-[999] pointer-events-none flex items-center justify-center"
           >
             {/* Vignette overlay */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 0.4 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.4 }}
               className="absolute inset-0 bg-gradient-radial from-transparent via-background/30 to-background/60"
             />
-            
+
             {/* Center blur effect */}
             <motion.div
               initial={{ scale: 0.8, opacity: 0 }}
@@ -70,10 +77,13 @@ export const TransitionProvider = ({ children }: { children: ReactNode }) => {
 // Hook to handle smooth section navigation with transition effect
 export const useSmoothNavigation = () => {
   const { triggerTransition } = useTransition();
-  
-  const navigateToSection = useCallback((sectionId: string) => {
-    triggerTransition(sectionId);
-  }, [triggerTransition]);
+
+  const navigateToSection = useCallback(
+    (sectionId: string) => {
+      triggerTransition(sectionId);
+    },
+    [triggerTransition],
+  );
 
   return navigateToSection;
 };

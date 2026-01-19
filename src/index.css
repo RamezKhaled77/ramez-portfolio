@@ -9,31 +9,31 @@ All colors MUST be HSL.
 @layer base {
   :root {
     /* Modern Playful Portfolio Color System - REFINED LIGHT MODE */
-    --background: 45 45% 96%;  /* Slightly warmer cream */
-    --foreground: 0 0% 8%;  /* Near-black for better readability */
+    --background: 45 45% 96%; /* Slightly warmer cream */
+    --foreground: 0 0% 8%; /* Near-black for better readability */
 
-    --card: 45 30% 92%;  /* Slightly lighter than background for contrast */
+    --card: 45 30% 92%; /* Slightly lighter than background for contrast */
     --card-foreground: 0 0% 8%;
 
     --popover: 45 45% 98%;
     --popover-foreground: 0 0% 8%;
 
-    --primary: 0 72% 50%;  /* Slightly darker red for better contrast */
+    --primary: 0 72% 50%; /* Slightly darker red for better contrast */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 45 25% 88%;  /* Distinct from card */
+    --secondary: 45 25% 88%; /* Distinct from card */
     --secondary-foreground: 0 0% 15%;
 
     --muted: 45 20% 85%;
-    --muted-foreground: 0 0% 35%;  /* Improved contrast from 30% */
+    --muted-foreground: 0 0% 35%; /* Improved contrast from 30% */
 
-    --accent: 0 72% 50%;  /* Red accent */
+    --accent: 0 72% 50%; /* Red accent */
     --accent-foreground: 0 0% 100%;
 
     --destructive: 0 72% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 40 25% 75%;  /* More visible borders */
+    --border: 40 25% 75%; /* More visible borders */
     --input: 45 30% 92%;
     --ring: 0 72% 50%;
 
@@ -43,35 +43,35 @@ All colors MUST be HSL.
     --cream: 45 45% 96%;
     --beige: 45 30% 92%;
     --dark-red: 0 72% 42%;
-    
+
     /* Glassmorphism - improved for light mode */
     --glass-bg: 45 45% 98% / 0.85;
     --glass-border: 40 25% 70% / 0.4;
-    
+
     /* Gradients */
     --gradient-primary: linear-gradient(135deg, hsl(0 72% 50%), hsl(0 72% 45%));
     --gradient-soft: linear-gradient(180deg, hsl(45 45% 96%), hsl(45 30% 94%));
-    
+
     /* Shadows - slightly stronger for definition */
     --shadow-soft: 0 4px 20px hsl(30 20% 20% / 0.06);
     --shadow-medium: 0 8px 30px hsl(30 20% 20% / 0.1);
     --shadow-bold: 0 12px 40px hsl(30 20% 20% / 0.12);
-    
+
     /* Card-specific tokens for light mode */
     --card-border: 40 25% 78%;
     --card-border-hover: 0 72% 50%;
     --card-shadow: 0 2px 8px hsl(30 20% 20% / 0.04);
     --card-shadow-hover: 0 8px 24px hsl(30 20% 20% / 0.1);
-    
+
     /* Section backgrounds for alternation */
     --section-alt: 45 35% 94%;
-    
+
     /* Text hierarchy tokens */
     --heading-color: 0 0% 5%;
     --subheading-color: 0 0% 15%;
     --body-color: 0 0% 25%;
     --caption-color: 0 0% 45%;
-    
+
     /* Transitions */
     --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
@@ -114,23 +114,23 @@ All colors MUST be HSL.
     --border: 0 0% 20%;
     --input: 0 0% 15%;
     --ring: 0 76% 56%;
-    
+
     --glass-bg: 0 0% 12% / 0.7;
     --glass-border: 42 48% 95% / 0.1;
-    
+
     /* Dark mode card tokens */
     --card-border: 0 0% 22%;
     --card-border-hover: 0 76% 56%;
     --card-shadow: 0 2px 8px hsl(0 0% 0% / 0.2);
     --card-shadow-hover: 0 8px 24px hsl(0 0% 0% / 0.4);
-    
+
     --section-alt: 0 0% 10%;
-    
+
     --heading-color: 42 48% 95%;
     --subheading-color: 42 48% 90%;
     --body-color: 42 48% 80%;
     --caption-color: 42 48% 60%;
-    
+
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
@@ -158,12 +158,14 @@ All colors MUST be HSL.
 
   /* Custom scrollbar - Global (minimal, no arrows) */
   ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+    width: 10px;
+    height: 10px;
   }
 
   ::-webkit-scrollbar-track {
-    background: transparent;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background: hsl(var(--muted-foreground) / 0.1);
+    border-radius: 10px;
   }
 
   ::-webkit-scrollbar-thumb {
@@ -191,12 +193,17 @@ All colors MUST be HSL.
   }
 
   /* Firefox scrollbar */
-  * {
+  /* * {
     scrollbar-width: thin;
     scrollbar-color: hsl(var(--muted-foreground) / 0.25) transparent;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
+  } */
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     @apply font-display;
   }
 }
@@ -208,70 +215,82 @@ All colors MUST be HSL.
     -webkit-backdrop-filter: blur(20px);
     border: 1px solid hsl(var(--card-border));
     box-shadow: var(--card-shadow);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    transition:
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
   }
-  
+
   .glass-card:hover {
     border-color: hsl(var(--card-border-hover) / 0.4);
     box-shadow: var(--card-shadow-hover);
   }
-  
+
   /* Refined card for light mode */
   .card-refined {
     background: hsl(var(--card));
     border: 1px solid hsl(var(--card-border));
     box-shadow: var(--card-shadow);
-    transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+    transition:
+      border-color 0.3s ease,
+      box-shadow 0.3s ease,
+      transform 0.3s ease;
   }
-  
+
   .card-refined:hover {
     border-color: hsl(var(--card-border-hover) / 0.5);
     box-shadow: var(--card-shadow-hover);
   }
-  
+
   .hover-lift {
     transition: var(--transition-smooth);
   }
-  
+
   .hover-lift:hover {
     transform: translateY(-4px);
     box-shadow: var(--card-shadow-hover);
   }
-  
+
   /* Section divider */
   .section-divider {
     height: 1px;
-    background: linear-gradient(90deg, transparent, hsl(var(--border)), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      hsl(var(--border)),
+      transparent
+    );
     margin: 0 auto;
     max-width: 80%;
   }
-  
+
   .text-gradient {
     background: var(--gradient-primary);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
-  
+
   .animate-float {
     animation: float 6s ease-in-out infinite;
   }
-  
+
   @keyframes float {
-    0%, 100% {
+    0%,
+    100% {
       transform: translateY(0px);
     }
     50% {
       transform: translateY(-20px);
     }
   }
-  
+
   .animate-float-slow {
     animation: float-slow 8s ease-in-out infinite;
   }
-  
+
   @keyframes float-slow {
-    0%, 100% {
+    0%,
+    100% {
       transform: translate(0, 0);
     }
     33% {
@@ -281,15 +300,15 @@ All colors MUST be HSL.
       transform: translate(-20px, 20px);
     }
   }
-  
+
   .animate-pulse-slow {
     animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
-  
+
   .animate-spin-slow {
     animation: spin-slow 20s linear infinite;
   }
-  
+
   @keyframes spin-slow {
     from {
       transform: rotate(0deg);
@@ -298,7 +317,7 @@ All colors MUST be HSL.
       transform: rotate(360deg);
     }
   }
-  
+
   .bg-gradient-animated {
     background: linear-gradient(
       -45deg,
@@ -310,7 +329,7 @@ All colors MUST be HSL.
     background-size: 400% 400%;
     animation: gradient-shift 15s ease infinite;
   }
-  
+
   @keyframes gradient-shift {
     0% {
       background-position: 0% 50%;
@@ -322,30 +341,32 @@ All colors MUST be HSL.
       background-position: 0% 50%;
     }
   }
-  
+
   .parallax {
     transition: transform 0.3s ease-out;
   }
-  
-.scroll-reveal {
-  opacity: 0;
-  transform: translateY(50px) scale(0.95);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
-              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-}
 
-.scroll-reveal-visible {
-  opacity: 1;
-  transform: translateY(0) scale(1);
-}
+  .scroll-reveal {
+    opacity: 0;
+    transform: translateY(50px) scale(0.95);
+    transition:
+      opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+      transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  }
 
-.scroll-reveal-hidden {
-  opacity: 0;
-  transform: translateY(-50px) scale(0.95);
-  transition: opacity 0.6s cubic-bezier(0.7, 0, 0.84, 0), 
-              transform 0.6s cubic-bezier(0.7, 0, 0.84, 0);
-}
-  
+  .scroll-reveal-visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+  .scroll-reveal-hidden {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.95);
+    transition:
+      opacity 0.6s cubic-bezier(0.7, 0, 0.84, 0),
+      transform 0.6s cubic-bezier(0.7, 0, 0.84, 0);
+  }
+
   @keyframes stagger-in {
     0% {
       opacity: 0;
@@ -356,11 +377,11 @@ All colors MUST be HSL.
       transform: translateY(0) scale(1);
     }
   }
-  
+
   .animate-stagger-in {
     animation: stagger-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
   }
-  
+
   @keyframes scroll-x {
     from {
       transform: translateX(0);
@@ -369,23 +390,23 @@ All colors MUST be HSL.
       transform: translateX(-50%);
     }
   }
-  
+
   .animate-scroll-x {
     animation: scroll-x 40s linear infinite;
   }
-  
+
   .animate-scroll-x:hover {
     animation-play-state: paused;
   }
-  
+
   .animate-scroll-x-reverse {
     animation: scroll-x-reverse 40s linear infinite;
   }
-  
+
   .animate-scroll-x-reverse:hover {
     animation-play-state: paused;
   }
-  
+
   @keyframes scroll-x-reverse {
     from {
       transform: translateX(-50%);
@@ -396,7 +417,8 @@ All colors MUST be HSL.
   }
 
   @keyframes float-particle {
-    0%, 100% {
+    0%,
+    100% {
       transform: translate(0, 0) rotate(0deg);
     }
     25% {
@@ -415,7 +437,8 @@ All colors MUST be HSL.
   }
 
   @keyframes float-slow {
-    0%, 100% {
+    0%,
+    100% {
       transform: translate(0, 0);
     }
     33% {
@@ -521,10 +544,12 @@ All colors MUST be HSL.
 
   /* Typing cursor blink animation */
   @keyframes blink {
-    0%, 50% {
+    0%,
+    50% {
       opacity: 1;
     }
-    51%, 100% {
+    51%,
+    100% {
       opacity: 0;
     }
   }
