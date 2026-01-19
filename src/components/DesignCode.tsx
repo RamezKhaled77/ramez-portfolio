@@ -5,133 +5,204 @@ import { motion, useInView } from "framer-motion";
 const syntaxColors = {
   keyword: "#c633ff", // Purple
   tag: "#e1237d", // Red
-  attr: "#feef2d", // Orange
+  attr: "#feef2d", // Yellow
+  symbol: "#ff6969", // Red
   string: "#3fa95a", // Green
   function: "#1253ee", // Blue
   comment: "#808080", // Gray
 };
-
 const skeletonMapping = [
   {
     id: "header",
     designLabel: "Header",
-    codeLines: [0, 1, 2],
+    codeLines: [2, 3, 4],
     color: "#4dabf7",
   },
-  {
-    id: "nav",
-    designLabel: "Navigation",
-    codeLines: [3, 4, 5],
-    color: "#38d9a9",
-  },
+  { id: "nav", designLabel: "Navigation", codeLines: [5], color: "#38d9a9" },
   {
     id: "hero",
     designLabel: "Hero Section",
     codeLines: [6, 7, 8],
     color: "#be4bdb",
   },
-  { id: "card1", designLabel: "Card 01", codeLines: [9, 10], color: "#ff922b" },
-  {
-    id: "card2",
-    designLabel: "Card 02",
-    codeLines: [11, 12],
-    color: "#ff6b6b",
-  },
+  { id: "card1", designLabel: "Card 01", codeLines: [10], color: "#ff922b" },
+  { id: "card2", designLabel: "Card 02", codeLines: [11], color: "#ff6b6b" },
   {
     id: "button",
     designLabel: "Primary Button",
-    codeLines: [13, 14],
+    codeLines: [13],
     color: "#22b8cf",
   },
   {
     id: "footer",
     designLabel: "Footer",
-    codeLines: [15, 16, 17],
+    codeLines: [14, 15, 16],
     color: "#82c91e",
   },
 ];
 
 const codeSkeletonLines = [
+  // 1. Export statement: export const Dashboard = () => {
   {
     indent: 0,
     tokens: [
-      { w: "15%", c: "keyword" },
-      { w: "25%", c: "function" },
+      { w: "10%", c: "keyword" },
+      { w: "12%", c: "keyword" },
+      { w: "20%", c: "function" },
+      { w: "5%", c: "symbol" },
     ],
   },
+
+  // 2. Return statement: return (
   {
     indent: 1,
     tokens: [
-      { w: "20%", c: "keyword" },
-      { w: "30%", c: "tag" },
+      { w: "10%", c: "keyword" },
+      { w: "2%", c: "symbol" },
     ],
   },
+
+  // 3. Header Section (Lines 2,3,4)
   {
     indent: 2,
     tokens: [
-      { w: "40%", c: "attr" },
+      { w: "2%", c: "symbol" },
+      { w: "18%", c: "tag" },
+      { w: "2%", c: "symbol" },
+    ],
+  },
+  {
+    indent: 3,
+    tokens: [
+      { w: "35%", c: "attr" },
       { w: "15%", c: "string" },
     ],
   },
   {
-    indent: 1,
+    indent: 2,
     tokens: [
-      { w: "12%", c: "tag" },
-      { w: "35%", c: "comment" },
+      { w: "2%", c: "symbol" },
+      { w: "18%", c: "tag" },
+      { w: "2%", c: "symbol" },
     ],
   },
+
+  // 4. Navigation (Self-closing): <Navbar active={true} />
   {
     indent: 2,
     tokens: [
-      { w: "20%", c: "attr" },
-      { w: "25%", c: "string" },
-    ],
-  },
-  {
-    indent: 1,
-    tokens: [
-      { w: "18%", c: "tag" },
-      { w: "40%", c: "attr" },
-    ],
-  },
-  { indent: 2, tokens: [{ w: "30%", c: "string" }] },
-  { indent: 2, tokens: [{ w: "10%", c: "keyword" }] },
-  {
-    indent: 1,
-    tokens: [
-      { w: "30%", c: "tag" },
+      { w: "2%", c: "symbol" },
+      { w: "15%", c: "tag" },
       { w: "25%", c: "attr" },
+      { w: "10%", c: "string" },
+      { w: "2%", c: "symbol" },
     ],
   },
-  { indent: 2, tokens: [{ w: "45%", c: "string" }] },
-  { indent: 2, tokens: [{ w: "15%", c: "tag" }] },
-  {
-    indent: 1,
-    tokens: [
-      { w: "20%", c: "tag" },
-      { w: "25%", c: "comment" },
-    ],
-  },
-  { indent: 2, tokens: [{ w: "25%", c: "attr" }] },
-  {
-    indent: 1,
-    tokens: [
-      { w: "15%", c: "keyword" },
-      { w: "30%", c: "function" },
-    ],
-  },
-  { indent: 2, tokens: [{ w: "40%", c: "string" }] },
-  {
-    indent: 0,
-    tokens: [
-      { w: "12%", c: "keyword" },
-      { w: "20%", c: "tag" },
-    ],
-  },
-  { indent: 1, tokens: [{ w: "45%", c: "comment" }] },
-  { indent: 2, tokens: [{ w: "30%", c: "tag" }] },
-];
 
+  // 5. Main Content / Hero
+  {
+    indent: 2,
+    tokens: [
+      { w: "2%", c: "symbol" },
+      { w: "12%", c: "tag" },
+      { w: "2%", c: "symbol" },
+    ],
+  },
+  { indent: 3, tokens: [{ w: "45%", c: "comment" }] },
+  {
+    indent: 2,
+    tokens: [
+      { w: "2%", c: "symbol" },
+      { w: "12%", c: "tag" },
+      { w: "2%", c: "symbol" },
+    ],
+  },
+
+  // 6. Grid Wrapper for Cards: <div className="grid">
+  {
+    indent: 2,
+    tokens: [
+      { w: "2%", c: "symbol" },
+      { w: "8%", c: "tag" },
+      { w: "30%", c: "attr" },
+      { w: "2%", c: "symbol" },
+    ],
+  },
+
+  // 7. Card 01
+  {
+    indent: 3,
+    tokens: [
+      { w: "2%", c: "symbol" },
+      { w: "10%", c: "tag" },
+      { w: "2%", c: "symbol" },
+      { w: "15%", c: "string" },
+      { w: "2%", c: "symbol" },
+      { w: "10%", c: "tag" },
+      { w: "2%", c: "symbol" },
+    ],
+  },
+
+  // 8. Card 02
+  {
+    indent: 3,
+    tokens: [
+      { w: "2%", c: "symbol" },
+      { w: "10%", c: "tag" },
+      { w: "2%", c: "symbol" },
+      { w: "15%", c: "string" },
+      { w: "2%", c: "symbol" },
+      { w: "10%", c: "tag" },
+      { w: "2%", c: "symbol" },
+    ],
+  },
+
+  // 9. Closing Grid
+  {
+    indent: 2,
+    tokens: [
+      { w: "2%", c: "symbol" },
+      { w: "8%", c: "tag" },
+      { w: "2%", c: "symbol" },
+    ],
+  },
+
+  // 10. Primary Button: <Button>Click</Button>
+  {
+    indent: 3,
+    tokens: [
+      { w: "2%", c: "symbol" },
+      { w: "12%", c: "tag" },
+      { w: "2%", c: "symbol" },
+      { w: "10%", c: "keyword" },
+      { w: "2%", c: "symbol" },
+      { w: "12%", c: "tag" },
+      { w: "2%", c: "symbol" },
+    ],
+  },
+
+  // 11. Footer Section
+  {
+    indent: 2,
+    tokens: [
+      { w: "2%", c: "symbol" },
+      { w: "14%", c: "tag" },
+      { w: "2%", c: "symbol" },
+    ],
+  },
+  { indent: 3, tokens: [{ w: "40%", c: "comment" }] },
+  {
+    indent: 2,
+    tokens: [
+      { w: "2%", c: "symbol" },
+      { w: "14%", c: "tag" },
+      { w: "2%", c: "symbol" },
+    ],
+  },
+
+  // 12. Final Closing
+  { indent: 1, tokens: [{ w: "4%", c: "symbol" }] }, // );
+];
 // Get color for a code line based on its mapping
 const getLineColor = (lineIndex: number, isHighlighted: boolean) => {
   const mapping = skeletonMapping.find((m) => m.codeLines.includes(lineIndex));
@@ -231,7 +302,8 @@ const DesignCode = () => {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-            Design <span className="text-muted-foreground">×</span> Code
+            Design <span className="text-muted-foreground">×</span>{" "}
+            <span className="text-primary">Code</span>
           </h2>
           <p className="text-muted-foreground/70 text-base max-w-2xl mx-auto">
             Understanding structure and component logic before visual polish
@@ -242,7 +314,7 @@ const DesignCode = () => {
         </motion.div>
 
         {/* Main Content Grid */}
-        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 bg-fuchsia-300">
+        <div className="grid lg:grid-cols-2 gap-8 lg:gap-12 ">
           {/* Design Skeleton Side */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -537,7 +609,7 @@ const DesignCode = () => {
                       }}
                     >
                       {/* Line number */}
-                      <span className="text-[10px] w-5 text-muted-foreground/40">
+                      <span className="text-[10px] w-5 text-muted-foreground/60">
                         {index + 1}
                       </span>
 
