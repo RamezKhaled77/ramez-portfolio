@@ -5,7 +5,7 @@ import ScrollReveal from "./ScrollReveal";
 
 type TabType = "react" | "html" | "css" | "javascript";
 
-const CodeIDE = () => {
+const CodeIDETwo = () => {
   const [activeTab, setActiveTab] = useState<TabType>("react");
   const [displayedCode, setDisplayedCode] = useState("");
   const [charIndex, setCharIndex] = useState(0);
@@ -24,9 +24,8 @@ const CodeIDE = () => {
       "  return (",
       "    <motion.div className='p-8'>",
       "      <h1>Building Experiences</h1>",
-      "      <p>With React, TypeScript, and Tailwind CSS</p>",
       "      {skills.map(skill => (",
-      "        <span key={skill.id} skill={skill}>{skill}</span>",
+      "        <span key={skill}>{skill}</span>",
       "      ))}",
       "    </motion.div>",
       "  );",
@@ -42,13 +41,12 @@ const CodeIDE = () => {
       "  <link rel='stylesheet' href='styles.css'>",
       "</head>",
       "<body>",
-      "  <header id='hero'>",
-      "    <nav id='navbar'>",
-      "      <div id='logo'>Portfolio</div>",
+      "  <header class='hero'>",
+      "    <nav class='navbar'>",
+      "      <div class='logo'>Portfolio</div>",
       "    </nav>",
-      "    <div id='hero-content'>",
+      "    <div class='hero-content'>",
       "      <h1>Creative Developer</h1>",
-      "      <p>Transforming Ideas into Digital Experiences</p>",
       "    </div>",
       "  </header>",
       "</body>",
@@ -60,13 +58,11 @@ const CodeIDE = () => {
       "  --bg: #ffffff;",
       "}",
       "",
-      "body {",
-      "  background: var(--bg);",
-      "}",
-      "",
       ".hero {",
       "  min-height: 100vh;",
+      "  display: flex;",
       "  background: linear-gradient(135deg, var(--primary), #8b5cf6);",
+      "  color: white;",
       "}",
       "",
       ".navbar {",
@@ -75,24 +71,24 @@ const CodeIDE = () => {
       "}",
     ],
     javascript: [
-      "const runTask = async (...tasks) => {",
-      "  const results = await Promise.all(tasks);",
-      "  return results.filter(Boolean);",
-      "};",
+      "class Portfolio {",
+      "  constructor() {",
+      "    this.projects = [];",
+      "    this.init();",
+      "  }",
       "",
-      "function* sequenceGenerator(items) {",
-      "  for (const item of items) {",
-      "    yield { ...item, timestamp: Date.now() };",
+      "  init() {",
+      "    this.setupAnimations();",
+      "    this.loadProjects();",
+      "  }",
+      "",
+      "  setupAnimations() {",
+      "    const cards = document.querySelectorAll('.card');",
+      "    cards.forEach(card => card.classList.add('fade-in'));",
       "  }",
       "}",
       "",
-      "const processor = async ({ id, delta }) => {",
-      "  const { data } = await fetch(`/api/${id}`);",
-      "  return data?.map(x => x * delta);",
-      "};",
-      "",
-      "const [res] = await runTask(processor(10, 0.5));",
-      "console.log(sequenceGenerator(res).next());",
+      "new Portfolio();",
     ],
   };
 
@@ -184,25 +180,17 @@ const CodeIDE = () => {
         .replace(/>/g, "&gt;");
 
       // Syntax Highlighting (نفس المنطق السابق)
-      h = h.replace(/(\/\/.*)/g, '<span class="text-[#236dce]">$1</span>');
+      h = h.replace(/(\/\/.*)/g, '<span class="text-[#6a9955]">$1</span>');
       h = h.replace(
         /(['"`].*?['"`])/g,
-        '<span class="text-[#65e07a]">$1</span>',
+        '<span class="text-[#ce9178]">$1</span>',
       );
       const keywords =
-        /\b(const|let|var|export|import|from|default|if|else|key|className|root|body|fetch|Promise|now|next)\b/g;
-      h = h.replace(keywords, '<span class="text-[#f734a6]">$1</span>');
-      const keywords2 = /\b(function|async|await|return|log|for|of)\b/g;
-      h = h.replace(keywords2, '<span class="text-[#6f72f7]">$1</span>');
-      const keywords3 =
-        /\b(href|rel|map|id|hero|navbar|primary|bg|filter|yield|delta)\b/g;
-      h = h.replace(keywords3, '<span class="text-[#65c6ec]">$1</span>');
-      const keywords4 =
-        /\b(background|min-height|padding|justify-content|console|Date)\b/g;
-      h = h.replace(keywords4, '<span class="text-[#14e7a1]">$1</span>');
+        /\b(const|let|var|return|export|import|from|default|if|else)\b/g;
+      h = h.replace(keywords, '<span class="text-[#c586c0]">$1</span>');
       h = h.replace(
         /(&lt;\/?)(\w+)/g,
-        '$1<span class="text-[#f58325]">$2</span>',
+        '$1<span class="text-[#4ec9b0]">$2</span>',
       );
 
       return (
@@ -237,7 +225,7 @@ const CodeIDE = () => {
   return (
     <section
       ref={sectionRef}
-      className="py-24 md:py-32 relative overflow-hidden"
+      className="py-24 relative overflow-hidden bg-background"
     >
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background" />
@@ -246,7 +234,6 @@ const CodeIDE = () => {
         className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse"
         style={{ animationDelay: "1s" }}
       />
-
       <div className="container mx-auto px-6 relative z-10">
         <ScrollReveal>
           <div className="max-w-5xl mx-auto">
@@ -263,95 +250,84 @@ const CodeIDE = () => {
               </p>
             </div>
 
-            {/* IDE Container with visual frame for light/dark transition */}
-            <div className="relative group">
-              {/* Code Preview Label */}
-              <div className="flex items-center justify-center mb-4">
-                <div className="px-4 py-1.5 bg-foreground/5 border border-card-border rounded-full">
-                  <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                    Code Preview
+            {/* Code Preview Label */}
+            <div className="flex items-center justify-center mb-4">
+              <div className="px-4 py-1.5 bg-foreground/5 border border-card-border rounded-full">
+                <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  Code Preview
+                </span>
+              </div>
+            </div>
+
+            <div className="bg-[#1e1e1e] rounded-xl shadow-2xl border border-white/10 overflow-hidden dark:border-primary/20 flex flex-col h-[565px]">
+              {/* Toolbar */}
+              <div className="bg-[#2d2d2d] px-4 py-3 flex items-center justify-between">
+                <div className="flex gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+                  <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+                  <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+                </div>
+                <div className="text-xs text-white/40 font-mono select-none">
+                  {activeTab.toUpperCase()} — Editor
+                </div>
+                {/* Action Buttons */}
+                <div className="flex items-center gap-2">
+                  <button className="p-2 hover:bg-primary/10 rounded-lg transition-colors group/btn">
+                    <Play
+                      size={14}
+                      className="text-primary group-hover/btn:scale-110 transition-transform"
+                    />
+                  </button>
+                  <button className="p-2 hover:bg-primary/10 rounded-lg transition-colors group/btn">
+                    <Terminal
+                      size={14}
+                      className="text-muted-foreground group-hover/btn:text-primary transition-colors"
+                    />
+                  </button>
+                </div>
+              </div>
+
+              {/* Tabs */}
+              <div className="flex bg-[#252526] overflow-x-auto no-scrollbar">
+                {tabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => handleTabChange(tab.id)}
+                    className={`flex items-center gap-2 px-4 py-2.5 text-xs font-mono transition-colors border-r border-[#1e1e1e] shrink-0 ${
+                      activeTab === tab.id
+                        ? "bg-[#1e1e1e] text-white border-t-2 border-t-primary"
+                        : "text-white/40 hover:bg-[#2d2d2d]"
+                    }`}
+                  >
+                    <tab.icon size={14} style={{ color: tab.color }} />
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Editor Area */}
+              <div className="flex-1 overflow-y-auto overflow-x-hidden py-4 custom-scrollbar">
+                {highlightCode(displayedCode)}
+              </div>
+
+              {/* Status Bar */}
+              <div className="bg-primary px-4 py-1 flex justify-between items-center text-[10px] text-white font-mono uppercase tracking-widest">
+                <div className="flex gap-4">
+                  <span>
+                    Ln {displayedCode.split("\n").length}, Col{" "}
+                    {displayedCode.split("\n").pop()?.length || 0}
+                  </span>
+                  <span className="hidden sm:inline">UTF-8</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className={isTyping ? "animate-pulse" : ""}>
+                    {isTyping ? "Typing..." : "Ready"}
                   </span>
                 </div>
               </div>
-
-              {/* IDE Window */}
-              <div className="bg-[#1e1e1e] rounded-xl shadow-2xl shadow-primary/25 border border-white/10 overflow-hidden dark:border-primary/20 flex flex-col h-[595px] md:h-[585px]">
-                {/* Toolbar */}
-                <div className="bg-[#2d2d2d] px-4 py-3 flex items-center justify-between">
-                  <div className="flex gap-1.5">
-                    <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-                    <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-                    <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
-                  </div>
-                  <div className="text-xs text-white/40 font-mono select-none">
-                    {activeTab.toUpperCase()} — Editor
-                  </div>
-                  {/* Action Buttons */}
-                  <div className="flex items-center gap-2">
-                    <button className="p-2 hover:bg-primary/10 rounded-lg transition-colors group/btn">
-                      <Play
-                        size={14}
-                        className="text-primary group-hover/btn:scale-110 transition-transform"
-                      />
-                    </button>
-                    <button className="p-2 hover:bg-primary/10 rounded-lg transition-colors group/btn">
-                      <Terminal
-                        size={14}
-                        className="text-muted-foreground group-hover/btn:text-primary transition-colors"
-                      />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Tabs */}
-                <div
-                  id="tabs"
-                  className="flex bg-[#252526] overflow-x-auto no-scrollbar "
-                >
-                  {tabs.map((tab) => (
-                    <button
-                      key={tab.id}
-                      onClick={() => handleTabChange(tab.id)}
-                      className={`flex items-center gap-2 px-4 py-2.5 text-xs font-mono transition-colors border-r border-[#1e1e1e] shrink-0 ${
-                        activeTab === tab.id
-                          ? "bg-[#1e1e1e] text-white border-t-2 border-t-primary"
-                          : "text-white/40 hover:bg-[#2d2d2d]"
-                      }`}
-                    >
-                      <tab.icon size={14} style={{ color: tab.color }} />
-                      {tab.label}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Editor Area */}
-                <div
-                  id="editor"
-                  className="flex-1 overflow-y-hidden overflow-x-auto py-4 custom-scrollbar"
-                >
-                  {highlightCode(displayedCode)}
-                </div>
-
-                {/* Status Bar */}
-                <div className="bg-primary px-4 py-1 flex justify-between items-center text-[10px] text-white font-mono uppercase tracking-widest">
-                  <div className="flex gap-4">
-                    <span>
-                      Ln {displayedCode.split("\n").length}, Col{" "}
-                      {displayedCode.split("\n").pop()?.length || 0}
-                    </span>
-                    <span className="hidden sm:inline">UTF-8</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className={isTyping ? "animate-pulse" : ""}>
-                      {isTyping ? "Typing..." : "Ready"}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Glow Effect */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
             </div>
+            {/* Glow Effect */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
           </div>
         </ScrollReveal>
       </div>
@@ -359,4 +335,4 @@ const CodeIDE = () => {
   );
 };
 
-export default CodeIDE;
+export default CodeIDETwo;
