@@ -77,11 +77,6 @@ const Index = () => {
               <CodeIDE />
             </ScrollReveal>
           </section>
-          <section id="code-ide2">
-            <ScrollReveal variant="fade-right" delay={100} duration={800}>
-              <CodeIDETwo />
-            </ScrollReveal>
-          </section>
           <section id="design-code">
             <ScrollReveal variant="fade-up" delay={100} duration={800}>
               <DesignCode />

@@ -192,12 +192,6 @@ All colors MUST be HSL.
     height: 0;
   }
 
-  /* Firefox scrollbar */
-  /* * {
-    scrollbar-width: thin;
-    scrollbar-color: hsl(var(--muted-foreground) / 0.25) transparent;
-  } */
-
   h1,
   h2,
   h3,
@@ -559,28 +553,49 @@ All colors MUST be HSL.
   }
 
   /* Custom modal scrollbar */
+  #tabs::-webkit-scrollbar,
+  #editor::-webkit-scrollbar,
   .modal-scrollbar::-webkit-scrollbar {
-    width: 6px;
+    width: 4px;
+    height: 4px;
   }
 
+  #tabs::-webkit-scrollbar-track,
   .modal-scrollbar::-webkit-scrollbar-track {
     background: hsl(var(--muted) / 0.3);
     border-radius: 3px;
   }
+  #editor::-webkit-scrollbar-track {
+    background: hsl(var(--primary) / 0.2);
+    border-radius: 3px;
+  }
 
+  #tabs::-webkit-scrollbar-thumb,
   .modal-scrollbar::-webkit-scrollbar-thumb {
     background: hsl(var(--primary) / 0.4);
     border-radius: 3px;
     transition: background 0.2s ease;
   }
+  #editor::-webkit-scrollbar-thumb {
+    background: hsl(var(--primary) / 0.3);
+    border-radius: 3px;
+    transition: background 0.2s ease;
+  }
+  #editor::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.6);
+  }
 
+  #tabs::-webkit-scrollbar-thumb:hover,
   .modal-scrollbar::-webkit-scrollbar-thumb:hover {
     background: hsl(var(--primary) / 0.6);
   }
 
-  /* Firefox scrollbar */
-  .modal-scrollbar {
-    scrollbar-width: thin;
-    scrollbar-color: hsl(var(--primary) / 0.4) hsl(var(--muted) / 0.3);
+  /* Hide scrollbar buttons/arrows */
+  #tabs::-webkit-scrollbar-button,
+  #editor::-webkit-scrollbar-button,
+  .modal-scrollbar::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
   }
 }

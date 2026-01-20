@@ -24,8 +24,9 @@ const CodeIDE = () => {
       "  return (",
       "    <motion.div className='p-8'>",
       "      <h1>Building Experiences</h1>",
+      "      <p>With React, TypeScript, and Tailwind CSS</p>",
       "      {skills.map(skill => (",
-      "        <span key={skill}>{skill}</span>",
+      "        <span key={skill.id} skill={skill}>{skill}</span>",
       "      ))}",
       "    </motion.div>",
       "  );",
@@ -41,12 +42,13 @@ const CodeIDE = () => {
       "  <link rel='stylesheet' href='styles.css'>",
       "</head>",
       "<body>",
-      "  <header class='hero'>",
-      "    <nav class='navbar'>",
-      "      <div class='logo'>Portfolio</div>",
+      "  <header id='hero'>",
+      "    <nav id='navbar'>",
+      "      <div id='logo'>Portfolio</div>",
       "    </nav>",
-      "    <div class='hero-content'>",
+      "    <div id='hero-content'>",
       "      <h1>Creative Developer</h1>",
+      "      <p>Transforming Ideas into Digital Experiences</p>",
       "    </div>",
       "  </header>",
       "</body>",
@@ -58,11 +60,13 @@ const CodeIDE = () => {
       "  --bg: #ffffff;",
       "}",
       "",
+      "body {",
+      "  background: var(--bg);",
+      "}",
+      "",
       ".hero {",
       "  min-height: 100vh;",
-      "  display: flex;",
       "  background: linear-gradient(135deg, var(--primary), #8b5cf6);",
-      "  color: white;",
       "}",
       "",
       ".navbar {",
@@ -71,24 +75,24 @@ const CodeIDE = () => {
       "}",
     ],
     javascript: [
-      "class Portfolio {",
-      "  constructor() {",
-      "    this.projects = [];",
-      "    this.init();",
-      "  }",
+      "const runTask = async (...tasks) => {",
+      "  const results = await Promise.all(tasks);",
+      "  return results.filter(Boolean);",
+      "};",
       "",
-      "  init() {",
-      "    this.setupAnimations();",
-      "    this.loadProjects();",
-      "  }",
-      "",
-      "  setupAnimations() {",
-      "    const cards = document.querySelectorAll('.card');",
-      "    cards.forEach(card => card.classList.add('fade-in'));",
+      "function* sequenceGenerator(items) {",
+      "  for (const item of items) {",
+      "    yield { ...item, timestamp: Date.now() };",
       "  }",
       "}",
       "",
-      "new Portfolio();",
+      "const processor = async ({ id, delta }) => {",
+      "  const { data } = await fetch(`/api/${id}`);",
+      "  return data?.map(x => x * delta);",
+      "};",
+      "",
+      "const [res] = await runTask(processor(10, 0.5));",
+      "console.log(sequenceGenerator(res).next());",
     ],
   };
 
@@ -180,17 +184,21 @@ const CodeIDE = () => {
         .replace(/>/g, "&gt;");
 
       // Syntax Highlighting (نفس المنطق السابق)
-      h = h.replace(/(\/\/.*)/g, '<span class="text-[#6a9955]">$1</span>');
+      h = h.replace(/(\/\/.*)/g, '<span class="text-[#236dce]">$1</span>');
       h = h.replace(
         /(['"`].*?['"`])/g,
-        '<span class="text-[#ce9178]">$1</span>',
+        '<span class="text-[#65e07a]">$1</span>',
       );
       const keywords =
-        /\b(const|let|var|return|export|import|from|default|if|else)\b/g;
-      h = h.replace(keywords, '<span class="text-[#c586c0]">$1</span>');
+        /\b(const|let|var|export|import|from|default|if|else|key|className)\b/g;
+      h = h.replace(keywords, '<span class="text-[#f734a6]">$1</span>');
+      const keywords2 = /\b(function|async|await|return)\b/g;
+      h = h.replace(keywords2, '<span class="text-[#6567ec]">$1</span>');
+      const keywords3 = /\b(href|rel|map|id)\b/g;
+      h = h.replace(keywords3, '<span class="text-[#65c6ec]">$1</span>');
       h = h.replace(
         /(&lt;\/?)(\w+)/g,
-        '$1<span class="text-[#4ec9b0]">$2</span>',
+        '$1<span class="text-[#f58325]">$2</span>',
       );
 
       return (
@@ -263,7 +271,7 @@ const CodeIDE = () => {
               </div>
 
               {/* IDE Window */}
-              <div className="bg-[#1e1e1e] rounded-xl shadow-2xl border border-white/10 overflow-hidden dark:border-primary/20 flex flex-col h-[570px]">
+              <div className="bg-[#1e1e1e] rounded-xl shadow-2xl shadow-primary/25 border border-white/10 overflow-hidden dark:border-primary/20 flex flex-col h-[595px] md:h-[585px]">
                 {/* Toolbar */}
                 <div className="bg-[#2d2d2d] px-4 py-3 flex items-center justify-between">
                   <div className="flex gap-1.5">
@@ -292,7 +300,10 @@ const CodeIDE = () => {
                 </div>
 
                 {/* Tabs */}
-                <div className="flex bg-[#252526] overflow-x-auto no-scrollbar">
+                <div
+                  id="tabs"
+                  className="flex bg-[#252526] overflow-x-auto no-scrollbar "
+                >
                   {tabs.map((tab) => (
                     <button
                       key={tab.id}
@@ -310,7 +321,10 @@ const CodeIDE = () => {
                 </div>
 
                 {/* Editor Area */}
-                <div className="flex-1 overflow-y-auto overflow-x-hidden py-4 custom-scrollbar">
+                <div
+                  id="editor"
+                  className="flex-1 overflow-y-hidden overflow-x-auto py-4 custom-scrollbar"
+                >
                   {highlightCode(displayedCode)}
                 </div>
 
