@@ -22,7 +22,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import ScrollProgress from "@/components/ScrollProgress";
 import Preloader from "@/components/Preloader";
 import HowMyBrainWorks from "@/components/HowMyBrainWorks";
-
+import CodeIDETwo from "@/components/CodeIDETwo";
 
 const Index = () => {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -30,7 +30,9 @@ const Index = () => {
   return (
     <>
       <Preloader onComplete={() => setIsLoaded(true)} />
-      <div className={`min-h-screen scroll-smooth overflow-x-hidden transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
+      <div
+        className={`min-h-screen scroll-smooth overflow-x-hidden transition-opacity duration-500 ${isLoaded ? "opacity-100" : "opacity-0"}`}
+      >
         <ScrollProgress />
         <ParallaxBackground />
         <FloatingParticles />
@@ -73,6 +75,11 @@ const Index = () => {
           <section id="code-ide">
             <ScrollReveal variant="fade-right" delay={100} duration={800}>
               <CodeIDE />
+            </ScrollReveal>
+          </section>
+          <section id="code-ide2">
+            <ScrollReveal variant="fade-right" delay={100} duration={800}>
+              <CodeIDETwo />
             </ScrollReveal>
           </section>
           <section id="design-code">

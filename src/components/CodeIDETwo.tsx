@@ -5,7 +5,7 @@ import ScrollReveal from "./ScrollReveal";
 
 type TabType = "react" | "html" | "css" | "javascript";
 
-const CodeIDE = () => {
+const CodeIDETwo = () => {
   const [activeTab, setActiveTab] = useState<TabType>("react");
   const [displayedCode, setDisplayedCode] = useState("");
   const [charIndex, setCharIndex] = useState(0);
@@ -225,7 +225,7 @@ const CodeIDE = () => {
   return (
     <section
       ref={sectionRef}
-      className="py-24 md:py-32 relative overflow-hidden"
+      className="py-24 relative overflow-hidden bg-background"
     >
       {/* Background Effects */}
       <div className="absolute inset-0 bg-gradient-to-b from-background via-primary/5 to-background" />
@@ -234,10 +234,9 @@ const CodeIDE = () => {
         className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-accent/10 rounded-full blur-3xl animate-pulse"
         style={{ animationDelay: "1s" }}
       />
-
       <div className="container mx-auto px-6 relative z-10">
         <ScrollReveal>
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-5xl mx-auto">
             {/* Section Header */}
             <div className="text-center mb-12">
               <span className="text-sm font-medium tracking-widest uppercase text-primary mb-4 block">
@@ -251,89 +250,84 @@ const CodeIDE = () => {
               </p>
             </div>
 
-            {/* IDE Container with visual frame for light/dark transition */}
-            <div className="relative group">
-              {/* Code Preview Label */}
-              <div className="flex items-center justify-center mb-4">
-                <div className="px-4 py-1.5 bg-foreground/5 border border-card-border rounded-full">
-                  <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                    Code Preview
+            {/* Code Preview Label */}
+            <div className="flex items-center justify-center mb-4">
+              <div className="px-4 py-1.5 bg-foreground/5 border border-card-border rounded-full">
+                <span className="text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                  Code Preview
+                </span>
+              </div>
+            </div>
+
+            <div className="bg-[#1e1e1e] rounded-xl shadow-2xl border border-white/10 overflow-hidden dark:border-primary/20 flex flex-col h-[565px]">
+              {/* Toolbar */}
+              <div className="bg-[#2d2d2d] px-4 py-3 flex items-center justify-between">
+                <div className="flex gap-1.5">
+                  <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
+                  <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+                  <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
+                </div>
+                <div className="text-xs text-white/40 font-mono select-none">
+                  {activeTab.toUpperCase()} — Editor
+                </div>
+                {/* Action Buttons */}
+                <div className="flex items-center gap-2">
+                  <button className="p-2 hover:bg-primary/10 rounded-lg transition-colors group/btn">
+                    <Play
+                      size={14}
+                      className="text-primary group-hover/btn:scale-110 transition-transform"
+                    />
+                  </button>
+                  <button className="p-2 hover:bg-primary/10 rounded-lg transition-colors group/btn">
+                    <Terminal
+                      size={14}
+                      className="text-muted-foreground group-hover/btn:text-primary transition-colors"
+                    />
+                  </button>
+                </div>
+              </div>
+
+              {/* Tabs */}
+              <div className="flex bg-[#252526] overflow-x-auto no-scrollbar">
+                {tabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    onClick={() => handleTabChange(tab.id)}
+                    className={`flex items-center gap-2 px-4 py-2.5 text-xs font-mono transition-colors border-r border-[#1e1e1e] shrink-0 ${
+                      activeTab === tab.id
+                        ? "bg-[#1e1e1e] text-white border-t-2 border-t-primary"
+                        : "text-white/40 hover:bg-[#2d2d2d]"
+                    }`}
+                  >
+                    <tab.icon size={14} style={{ color: tab.color }} />
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+
+              {/* Editor Area */}
+              <div className="flex-1 overflow-y-auto overflow-x-hidden py-4 custom-scrollbar">
+                {highlightCode(displayedCode)}
+              </div>
+
+              {/* Status Bar */}
+              <div className="bg-primary px-4 py-1 flex justify-between items-center text-[10px] text-white font-mono uppercase tracking-widest">
+                <div className="flex gap-4">
+                  <span>
+                    Ln {displayedCode.split("\n").length}, Col{" "}
+                    {displayedCode.split("\n").pop()?.length || 0}
+                  </span>
+                  <span className="hidden sm:inline">UTF-8</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className={isTyping ? "animate-pulse" : ""}>
+                    {isTyping ? "Typing..." : "Ready"}
                   </span>
                 </div>
               </div>
-
-              {/* IDE Window */}
-              <div className="bg-[#1e1e1e] rounded-xl shadow-2xl border border-white/10 overflow-hidden dark:border-primary/20 flex flex-col h-[570px]">
-                {/* Toolbar */}
-                <div className="bg-[#2d2d2d] px-4 py-3 flex items-center justify-between">
-                  <div className="flex gap-1.5">
-                    <div className="w-3 h-3 rounded-full bg-[#ff5f56]" />
-                    <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
-                    <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
-                  </div>
-                  <div className="text-xs text-white/40 font-mono select-none">
-                    {activeTab.toUpperCase()} — Editor
-                  </div>
-                  {/* Action Buttons */}
-                  <div className="flex items-center gap-2">
-                    <button className="p-2 hover:bg-primary/10 rounded-lg transition-colors group/btn">
-                      <Play
-                        size={14}
-                        className="text-primary group-hover/btn:scale-110 transition-transform"
-                      />
-                    </button>
-                    <button className="p-2 hover:bg-primary/10 rounded-lg transition-colors group/btn">
-                      <Terminal
-                        size={14}
-                        className="text-muted-foreground group-hover/btn:text-primary transition-colors"
-                      />
-                    </button>
-                  </div>
-                </div>
-
-                {/* Tabs */}
-                <div className="flex bg-[#252526] overflow-x-auto no-scrollbar">
-                  {tabs.map((tab) => (
-                    <button
-                      key={tab.id}
-                      onClick={() => handleTabChange(tab.id)}
-                      className={`flex items-center gap-2 px-4 py-2.5 text-xs font-mono transition-colors border-r border-[#1e1e1e] shrink-0 ${
-                        activeTab === tab.id
-                          ? "bg-[#1e1e1e] text-white border-t-2 border-t-primary"
-                          : "text-white/40 hover:bg-[#2d2d2d]"
-                      }`}
-                    >
-                      <tab.icon size={14} style={{ color: tab.color }} />
-                      {tab.label}
-                    </button>
-                  ))}
-                </div>
-
-                {/* Editor Area */}
-                <div className="flex-1 overflow-y-auto overflow-x-hidden py-4 custom-scrollbar">
-                  {highlightCode(displayedCode)}
-                </div>
-
-                {/* Status Bar */}
-                <div className="bg-primary px-4 py-1 flex justify-between items-center text-[10px] text-white font-mono uppercase tracking-widest">
-                  <div className="flex gap-4">
-                    <span>
-                      Ln {displayedCode.split("\n").length}, Col{" "}
-                      {displayedCode.split("\n").pop()?.length || 0}
-                    </span>
-                    <span className="hidden sm:inline">UTF-8</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <span className={isTyping ? "animate-pulse" : ""}>
-                      {isTyping ? "Typing..." : "Ready"}
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Glow Effect */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
             </div>
+            {/* Glow Effect */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10" />
           </div>
         </ScrollReveal>
       </div>
@@ -341,4 +335,4 @@ const CodeIDE = () => {
   );
 };
 
-export default CodeIDE;
+export default CodeIDETwo;
