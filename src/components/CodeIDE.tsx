@@ -190,12 +190,16 @@ const CodeIDE = () => {
         '<span class="text-[#65e07a]">$1</span>',
       );
       const keywords =
-        /\b(const|let|var|export|import|from|default|if|else|key|className)\b/g;
+        /\b(const|let|var|export|import|from|default|if|else|key|className|root|body|fetch|Promise|now|next)\b/g;
       h = h.replace(keywords, '<span class="text-[#f734a6]">$1</span>');
-      const keywords2 = /\b(function|async|await|return)\b/g;
-      h = h.replace(keywords2, '<span class="text-[#6567ec]">$1</span>');
-      const keywords3 = /\b(href|rel|map|id)\b/g;
+      const keywords2 = /\b(function|async|await|return|log|for|of)\b/g;
+      h = h.replace(keywords2, '<span class="text-[#6f72f7]">$1</span>');
+      const keywords3 =
+        /\b(href|rel|map|id|hero|navbar|primary|bg|filter|yield|delta)\b/g;
       h = h.replace(keywords3, '<span class="text-[#65c6ec]">$1</span>');
+      const keywords4 =
+        /\b(background|min-height|padding|justify-content|console|Date)\b/g;
+      h = h.replace(keywords4, '<span class="text-[#14e7a1]">$1</span>');
       h = h.replace(
         /(&lt;\/?)(\w+)/g,
         '$1<span class="text-[#f58325]">$2</span>',
@@ -245,7 +249,7 @@ const CodeIDE = () => {
 
       <div className="container mx-auto px-6 relative z-10">
         <ScrollReveal>
-          <div className="max-w-6xl mx-auto">
+          <div className="max-w-5xl mx-auto">
             {/* Section Header */}
             <div className="text-center mb-12">
               <span className="text-sm font-medium tracking-widest uppercase text-primary mb-4 block">
