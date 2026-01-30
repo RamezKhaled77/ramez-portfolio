@@ -170,12 +170,11 @@ const CodeIDE = () => {
     const lines = code.split("\n");
 
     return lines.map((line, idx) => {
-      // التقاط المسافات في بداية السطر
+      // Indent Handling
       const indentMatch = line.match(/^(\s*)/);
       const indentContent = indentMatch ? indentMatch[0] : "";
       const remainingLine = line.substring(indentContent.length);
 
-      // تحويل كل مسافة لـ Non-breaking space عشان تظهر في المتصفح يقيناً
       const indentHtml = indentContent.replace(/ /g, "&nbsp;");
 
       let h = remainingLine
@@ -183,7 +182,7 @@ const CodeIDE = () => {
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;");
 
-      // Syntax Highlighting (نفس المنطق السابق)
+      // Syntax Highlighting
       h = h.replace(/(\/\/.*)/g, '<span class="text-[#236dce]">$1</span>');
       h = h.replace(
         /(['"`].*?['"`])/g,
@@ -210,17 +209,17 @@ const CodeIDE = () => {
           key={`${activeTab}-${idx}`}
           className="flex font-mono text-sm leading-6 min-h-[1.5rem]"
         >
-          {/* رقم السطر */}
+          {/* Lines Numbers */}
           <span className="w-12 shrink-0 text-right pr-4 text-white/20 select-none">
             {idx + 1}
           </span>
 
-          {/* المحتوى مع الـ Indent المضبوط */}
+          {/* Code */}
           <span className="whitespace-pre">
             <span dangerouslySetInnerHTML={{ __html: indentHtml }} />
             <span dangerouslySetInnerHTML={{ __html: h }} />
 
-            {/* الكرسور يظهر فقط في آخر سطر بيتم كتابته حالياً */}
+            {/* Typing Indicator */}
             {isTyping && idx === lines.length - 1 && (
               <motion.span
                 animate={{ opacity: [1, 0] }}
