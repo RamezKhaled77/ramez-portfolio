@@ -752,79 +752,80 @@ const ProductivityStack = () => {
         {/* Bento Grid */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto "
-          style={{ x, y }}
           onPointerMove={(e) => {
             const el = e.currentTarget;
             const rect = el.getBoundingClientRect();
             const nx = (e.clientX - rect.left - rect.width / 2) / rect.width;
             const ny = (e.clientY - rect.top - rect.height / 2) / rect.height;
-            mx.set(nx * 6);
-            my.set(ny * 6);
+            mx.set(nx * 15);
+            my.set(ny * 15);
           }}
           onPointerLeave={() => {
             mx.set(0);
             my.set(0);
           }}
         >
-          {panels.map((panel, index) => (
-            <motion.div
-              key={panel.id}
-              initial={{ opacity: 0, y: 50, scale: 0.96 }}
-              animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
-              transition={{
-                duration: 0.7,
-                delay: 0.1 + index * 0.08,
-                ease: [0.25, 0.46, 0.45, 0.94],
-              }}
-              className={`${getSizeClasses(panel.size)} relative group`}
-              onMouseEnter={() => setHoveredPanel(panel.id)}
-              onMouseLeave={() => setHoveredPanel(null)}
-            >
-              <div
-                className={`
-                  h-full p-5 rounded-2xl
-                  bg-card/60 backdrop-blur-sm
-                  border transition-all duration-300 ease-out
-                  ${getBorderGlow(panel.glowColor, hoveredPanel === panel.id)}
-                  ${hoveredPanel === panel.id ? "-translate-y-1.5" : ""}
-                `}
-                style={getGlowStyles(
-                  panel.glowColor,
-                  hoveredPanel === panel.id,
-                )}
+          {panels.map((panel, index) => {
+            const isHovered = hoveredPanel === panel.id;
+
+            return (
+              <motion.div
+                key={panel.id}
+                initial={{ opacity: 0, y: 50, scale: 0.96 }}
+                animate={isInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+                transition={{
+                  duration: 0.7,
+                  delay: 0.1 + index * 0.08,
+                  ease: [0.25, 0.46, 0.45, 0.94],
+                }}
+                className={`${getSizeClasses(panel.size)} relative group`}
+                onMouseEnter={() => setHoveredPanel(panel.id)}
+                onMouseLeave={() => setHoveredPanel(null)}
+                style={{
+                  x: isHovered ? x : 0,
+                  y: isHovered ? y : 0,
+                }}
               >
-                {/* Panel Header */}
-                <div className="mb-3">
-                  <span className="text-[10px] uppercase tracking-widest text-muted-foreground/60 font-semibold">
-                    {panel.category}
-                  </span>
-                  <h3 className="text-base font-bold text-foreground mt-0.5">
-                    {panel.title}
-                  </h3>
-                </div>
-
-                {/* Panel Content */}
-                <div className="relative h-[calc(100%-3.5rem)] ">
-                  {panel.content}
-                </div>
-
-                {/* Tooltip */}
-                <motion.div
-                  initial={{ opacity: 0, y: 8 }}
-                  animate={{
-                    opacity: hoveredPanel === panel.id ? 1 : 0,
-                    y: hoveredPanel === panel.id ? 0 : 8,
-                  }}
-                  transition={{ duration: 0.2 }}
-                  className="absolute bottom-4 left-4 right-4 pointer-events-none z-10"
+                <div
+                  className={`
+            h-full p-5 rounded-2xl
+            bg-card/60 backdrop-blur-sm
+            border transition-all duration-300 ease-out
+            ${getBorderGlow(panel.glowColor, isHovered)}
+            ${isHovered ? "-translate-y-1.5" : ""}
+          `}
+                  style={getGlowStyles(panel.glowColor, isHovered)}
                 >
-                  <div className="px-3 py-2 rounded-lg bg-foreground text-background text-xs font-medium shadow-lg">
-                    "{panel.tooltip}"
+                  <div className="mb-3">
+                    <span className="text-[10px] uppercase tracking-widest text-muted-foreground/60 font-semibold">
+                      {panel.category}
+                    </span>
+                    <h3 className="text-base font-bold text-foreground mt-0.5">
+                      {panel.title}
+                    </h3>
                   </div>
-                </motion.div>
-              </div>
-            </motion.div>
-          ))}
+
+                  <div className="relative h-[calc(100%-3.5rem)]">
+                    {panel.content}
+                  </div>
+
+                  <motion.div
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{
+                      opacity: isHovered ? 1 : 0,
+                      y: isHovered ? 0 : 8,
+                    }}
+                    transition={{ duration: 0.2 }}
+                    className="absolute bottom-4 left-4 right-4 pointer-events-none z-10"
+                  >
+                    <div className="px-3 py-2 rounded-lg bg-foreground text-background text-xs font-medium shadow-lg">
+                      "{panel.tooltip}"
+                    </div>
+                  </motion.div>
+                </div>
+              </motion.div>
+            );
+          })}
         </motion.div>
 
         {/* Bottom tagline */}
