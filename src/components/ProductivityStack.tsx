@@ -370,7 +370,7 @@ const ProductivityStack = () => {
   );
 
   // Learning Workflow Panel Content
-  const LearningContent = () => (
+  const LearningContent = ({ isHovered }: { isHovered: boolean }) => (
     <div className="space-y-3 h-full">
       <div className="flex items-center gap-3">
         <ToolIcon icon={BookOpen} label="Courses" color="amber" />
@@ -404,8 +404,8 @@ const ProductivityStack = () => {
               <motion.div
                 className="h-full rounded-full bg-amber-400/70 transition-colors duration-200 group-hover/step:bg-amber-400/85"
                 initial={{ width: 0 }}
-                animate={{ width: `${step.progress}%` }}
-                transition={{ duration: 1, delay: i * 0.15 }}
+                animate={{ width: isHovered ? `${step.progress}%` : "0%" }}
+                transition={{ duration: 0.8, delay: isHovered ? i * 0.1 : 0 }}
               />
             </div>
           </div>
@@ -422,7 +422,7 @@ const ProductivityStack = () => {
         <span className="text-muted-foreground/40">•</span>
         <ToolIcon icon={GitBranch} label="Git" color="muted" />
         <span className="text-muted-foreground/40">•</span>
-        <ToolIcon icon={Globe} label="DevTools" color="muted" />
+        <ToolIcon icon={Globe} label="Dev" color="muted" />
       </div>
 
       {/* Code editor skeleton */}
@@ -521,7 +521,7 @@ const ProductivityStack = () => {
   );
 
   // Project Tracking Panel Content (Jira)
-  const ProjectTrackingContent = () => (
+  const ProjectTrackingContent = ({ isHovered }: { isHovered: boolean }) => (
     <div className="space-y-4 h-full">
       <div className="flex items-center justify-between">
         <ToolIcon icon={Columns} label="Jira" color="blue" />
@@ -537,7 +537,7 @@ const ProductivityStack = () => {
             <motion.div
               className="h-full rounded-full bg-blue-400/70"
               initial={{ width: 0 }}
-              animate={{ width: "65%" }}
+              animate={{ width: isHovered ? "65%" : "0%" }}
               transition={{ duration: 1 }}
             />
           </div>
@@ -806,7 +806,13 @@ const ProductivityStack = () => {
                   </div>
 
                   <div className="relative h-[calc(100%-3.5rem)]">
-                    {panel.content}
+                    {panel.id === "learning" ? (
+                      <LearningContent isHovered={isHovered} />
+                    ) : panel.id === "projectTracking" ? (
+                      <ProjectTrackingContent isHovered={isHovered} />
+                    ) : (
+                      panel.content
+                    )}
                   </div>
 
                   <motion.div
@@ -818,7 +824,7 @@ const ProductivityStack = () => {
                     transition={{ duration: 0.2 }}
                     className="absolute bottom-4 left-4 right-4 pointer-events-none z-10"
                   >
-                    <div className="px-3 py-2 rounded-lg bg-foreground text-background text-xs font-medium shadow-lg">
+                    <div className="px-3 py-2 rounded-sm bg-foreground text-background text-xs font-medium shadow-lg">
                       "{panel.tooltip}"
                     </div>
                   </motion.div>
